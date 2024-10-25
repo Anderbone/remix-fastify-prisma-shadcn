@@ -2,6 +2,12 @@ import { json, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useActionData, Form } from "@remix-run/react";
 import { getAllPosts, createPostWithUser } from "~/db/posts";
 import type { Post, User } from "@prisma/client";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import { Textarea } from "~/components/ui/textarea";
+import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
+import { Label } from "~/components/ui/label";
+import { Alert, AlertDescription } from "~/components/ui/alert";
 
 type LoaderData = {
   posts: (Post & { author: User })[];
@@ -35,32 +41,47 @@ export default function Posts() {
   const actionData = useActionData();
 
   return (
-    <div>
-      <h1>Create a New Post</h1>
-      <Form method="post">
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input type="text" id="username" name="username" required />
-        </div>
-        <div>
-          <label htmlFor="title">Post Title:</label>
-          <input type="text" id="title" name="title" required />
-        </div>
-        <div>
-          <label htmlFor="content">Post Content:</label>
-          <textarea id="content" name="content" required></textarea>
-        </div>
-        <button type="submit">Create Post</button>
-      </Form>
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6">Create a New Post</h1>
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle>New Post</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form method="post" className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="username">Username</Label>
+              <Input type="text" id="username" name="username" required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="title">Post Title</Label>
+              <Input type="text" id="title" name="title" required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="content">Post Content</Label>
+              <Textarea id="content" name="content" required />
+            </div>
+            <Button type="submit">Create Post</Button>
+          </Form>
+        </CardContent>
+      </Card>
 
-      <h2>All Posts</h2>
-      {posts.map((post) => (
-        <div key={post.id}>
-          <h3>{post.title}</h3>
-          <p>By: {post.author.name}</p>
-          <p>{post.content}</p>
-        </div>
-      ))}
+      <h2 className="text-2xl font-semibold mb-4">All Posts</h2>
+      <div className="space-y-4">
+        {posts.map((post) => (
+          <Card key={post.id}>
+            <CardHeader>
+              <CardTitle>{post.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-500 mb-2">
+                By: {post.author.name}
+              </p>
+              <p>{post.content}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }

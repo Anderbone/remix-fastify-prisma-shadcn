@@ -17,6 +17,7 @@
     "@mcansh/remix-fastify": "4.0.0",
     "@prisma/client": "^5.21.1",
     "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@remix-run/node": "^2.13.1",
     "@remix-run/react": "^2.13.1",
